@@ -1,0 +1,13 @@
+<div class={{className}} (mousemove)="hoverItem=true" (mouseleave)="hoverItem=false">
+    <div *ngIf="hoverItem" class="hoverContent one" (click)="openDialog($event)">
+        <i class="fa fa-cog" style="padding: 3px 4px 3px 4px;"></i>
+    </div>
+    <div *ngIf="hoverItem" class="hoverContent two" (click)="closeHandler($event)">
+        <i class="fa fa-close" style="padding: 3px 4px 3px 4px;"></i>
+    </div>
+    <div>
+        <input type='checkbox' class="form-control2" />
+        <span class="labelField">Label text</span>
+    </div>
+</div>
+<div #widgetContainer></div>
