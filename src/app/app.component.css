@@ -1,0 +1,56 @@
+.mainContainer{
+  background-color: #fdfdfd;
+  border: 1px solid #e8e8e8;
+  display: -webkit-box;
+ display: -moz-box;
+ display: -ms-flexbox;
+ display: -webkit-flex;
+ display: flex;
+
+ -webkit-flex-flow: row wrap;
+ flex-flow: row wrap;
+}
+.titleField{
+    color: #333333;
+    background-color: #f5f5f5;
+    border: 1px solid #dddddd;
+    padding: 10px;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    line-height: 1.1;
+}
+.fieldsMain {
+  width: 180px;
+  margin: 20px 0px 20px 20px;
+}
+.fieldsSection {
+  border: 1px solid #dddddd;
+  padding: 5px;
+}
+.field{
+    color: #ffffff;
+    background-color: #008cba;
+    border-color: #0079a1;
+    padding: 5px;
+    text-align:center;
+    font-size: 13px;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin-bottom: 2px;
+}
+.dropContainer {
+    flex: 1 auto;
+    margin: 20px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 10px;
+}
+.dropContainer .container{
+    height: 100%;
+}
+.dropHere{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: lightgray;
+}
