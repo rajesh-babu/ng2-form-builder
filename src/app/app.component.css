@@ -24,6 +24,7 @@
   margin: 20px 0px 20px 20px;
 }
 .fieldsSection {
+  width: 180px;
   border: 1px solid #dddddd;
   padding: 5px;
 }
@@ -36,6 +37,7 @@
     font-size: 13px;
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     margin-bottom: 2px;
+    cursor:pointer;
 }
 .dropContainer {
     flex: 1 auto;
@@ -46,6 +48,7 @@
 }
 .dropContainer .container{
     height: 100%;
+    margin-left: 0px;
 }
 .dropHere{
     height: 100%;

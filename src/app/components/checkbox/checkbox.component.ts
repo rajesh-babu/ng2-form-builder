@@ -1,5 +1,6 @@
 import { Component, ComponentFactoryResolver, ViewContainerRef, ViewChild } from '@angular/core';
-import { ComponentsModalComponent } from "../modal/components.modal"
+import { ComponentsModalComponent } from "../modal/components.modal";
+import { ModalService} from '../../services/Modalservice';
 @Component({
   selector: '[widget]',
   templateUrl:'./checkbox.component.html',
@@ -8,7 +9,15 @@ import { ComponentsModalComponent } from "../modal/components.modal"
 
 export class CheckBoxComponent {
 
-  constructor(private componentFactoryResolver:ComponentFactoryResolver) {}
+  enbleDrag:string = ' enable';
+
+  constructor(private componentFactoryResolver:ComponentFactoryResolver, private modalService:ModalService) {
+    modalService.modal$.subscribe((isOpened) => {
+      if(!isOpened){
+        this.enbleDrag = ' enable';
+      }
+    });
+  }
 
   closeHandler(evt:Event){
     evt.currentTarget["parentElement"].parentElement.remove();
@@ -17,6 +26,7 @@ export class CheckBoxComponent {
   openDialog(evt:Event){
       const factory = this.componentFactoryResolver.resolveComponentFactory(ComponentsModalComponent);
       let component = this.widgetContainer.createComponent(factory);
+      this.enbleDrag = ' disable';
     }
 
 }

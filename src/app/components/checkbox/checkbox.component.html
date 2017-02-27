@@ -1,4 +1,4 @@
-<div class={{className}} (mousemove)="hoverItem=true" (mouseleave)="hoverItem=false">
+<div class={{className}}{{enbleDrag}}  (mousemove)="hoverItem=true" (mouseleave)="hoverItem=false">
     <div *ngIf="hoverItem" class="hoverContent one" (click)="openDialog($event)">
         <i class="fa fa-cog" style="padding: 3px 4px 3px 4px;"></i>
     </div>

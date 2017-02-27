@@ -1,6 +1,8 @@
 import { Component, ComponentFactoryResolver, ViewContainerRef, ViewChild } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
-import { WidgetComponent} from './components/widget.components';
+import { TextfieldComponent} from './components/textfield/textfield.component';
+import { CheckBoxComponent} from './components/checkbox/checkbox.component';
+import { ModalService} from './services/Modalservice';
 
 @Component({
   selector: 'app-root',
@@ -8,15 +10,28 @@ import { WidgetComponent} from './components/widget.components';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-   public constructor(private dragulaService:DragulaService, private componentFactoryResolver: ComponentFactoryResolver ) {
+  drggedItem:Boolean = false;
+  initDrag:Boolean = false;
+  isModalOpened:Boolean = false;
+  compPosition:number = 0;
+   public constructor(private dragulaService:DragulaService, private componentFactoryResolver: ComponentFactoryResolver, private modalService:ModalService) {
+     modalService.modal$.subscribe((isOpened) => {
+       this.isModalOpened = isOpened;
+     });
      dragulaService.setOptions('first-bag', {
             copy: true,
             copySortSource: true,
+             revertOnSpill: true,
             accepts: function(el, target, source, sibling) {
               // To avoid draggin from right to left container
               return target.id !== 'fieldContainer';
-              //debugger;
-            }
+            },
+            // Disable the drag and drop if Modal is opened
+            moves: function (el:any, container:any, handle:any):any {
+              return !el.firstChild.classList.contains('disable');
+            //return true;
+          }
+
         })
       dragulaService.drop.subscribe((value) => {
           this.onDrop(value);
@@ -25,13 +40,11 @@ export class AppComponent {
           this.onDrag(value);
       });
    }
-   drggedItem:Boolean = false;
-   initDrag:Boolean = false;
-   compPosition:number = 0;
+
     private onDrag(value) {
 
-      if(value[1].className.indexOf("field") === -1){
-        value[1].style.display="none"
+      if(value[1].className.indexOf("field") === -1 ){
+       value[1].style.display="none"
       }
      }
    //(0 - bagname, 1 - el, 2 - target, 3 - source, 4 - sibling)
@@ -52,15 +65,25 @@ export class AppComponent {
             this.compPosition = Number(clsName.substring(indexPos+5));
             this.compPosition = this.compPosition--;
           }
-          this.addComponent();
+          var selectedComp:any;
+          switch(value[1].getAttribute("data-fieldname")){
+            case "txtField":
+                selectedComp = TextfieldComponent;
+                break;
+            case "checkboxField":
+                selectedComp = CheckBoxComponent;
+                break;
+          }
+          this.addComponent(selectedComp);
         }
 
     }
     @ViewChild('widgetContainer', {read: ViewContainerRef}) widgetContainer;
-    addComponent(){
-      const factory = this.componentFactoryResolver.resolveComponentFactory(WidgetComponent);
+    addComponent(selectedComp:any){
+      const factory = this.componentFactoryResolver.resolveComponentFactory(selectedComp);
       let component = this.widgetContainer.createComponent(factory, this.compPosition);
       component.instance.className = "droppedItem comp_"+ this.compPosition;
+
       this.initDrag = true;
     }
 }
